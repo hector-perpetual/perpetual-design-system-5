@@ -48,3 +48,7 @@ Imprime `OK`, el tamaño del archivo y el número de slides. La salida se escrib
 ## Nota
 
 El HTML es **autocontenido** (fuentes y logos embebidos), pensado para inspeccionarse en navegador y conectarse a herramientas de diseño (Figma, Canva, etc.) sin recursos externos.
+
+## Marca (fuente de verdad)
+
+La carpeta `brand/` contiene los tokens, componentes y reglas de marca de Perpetual (SKILL.md + references). Este repo es autosuficiente: diseno, fuentes (Armin Grotesk embebida), logos y reglas de marca en un solo lugar.
