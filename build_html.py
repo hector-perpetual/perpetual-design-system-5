@@ -262,15 +262,18 @@ def connector(x1, y1, x2, y2, color=BORDER, w=2):
 # ===========================================================================
 def m01():
     """Portada."""
-    cx = 10.35
     return (box(0, 6.05, 13.333, 1.45, fill=SURFACE)
             + logo(0.7, 0.7, 1.5)
-            # composicion de marca a la derecha
-            + blob(8.7, 1.05, 4.0, ACCENT)
-            + hexagon(9.7, 2.0, 2.1, WHITE) + box(cx + 0.05, 2.7, 0.7, 0.7, fill=ACCENT, oval=True)
-            + blob(12.05, 1.1, 0.95, YELLOW)
-            + blob(8.45, 4.6, 0.8, ACCENT2)
-            + txt(12.45, 0.6, 0.7, 0.6, "+", 26, ACCENT, 800)
+            # composicion: capas apiladas con profundidad (informacion en capas)
+            + box(9.7, 1.5, 2.9, 2.0, fill="#dbe7fb", r=16)
+            + box(9.25, 2.0, 2.9, 2.0, fill="#9dbcfb", r=16)
+            + box(8.8, 2.5, 2.9, 2.0, fill="#3b82f6", r=16)
+            + box(8.35, 3.0, 2.9, 2.0, fill=ACCENT, r=16, shadow=True)
+            + box(8.75, 3.5, 0.2, 0.2, fill=WHITE, oval=True)
+            + box(9.1, 3.5, 0.2, 0.2, fill=WHITE, oval=True)
+            + box(9.45, 3.5, 0.2, 0.2, fill=WHITE, oval=True)
+            + blob(11.95, 1.15, 0.85, YELLOW)
+            + blob(7.95, 5.05, 0.6, ACCENT2)
             # texto
             + txt(0.65, 1.85, 7.6, 2.0, f"Infografias {AC('ejecutivas.')}", 50, TEXT, 800, lh=0.98)
             + txt(0.7, 3.85, 6.6, 0.3, "Plantilla de presentacion", 13, ACCENT, 600, upper=True, spacing=0.8)
