@@ -153,9 +153,8 @@ def title(runs, x=0.7, y=0.7, w=7.5, size=33):
 
 
 def footer(page):
-    return (logo(0.55, 7.02, 0.92)
-            + txt(1.75, 7.0, 7, 0.3, "Confidencial &middot; Perpetual Technologies &copy; 2026",
-                  8.5, MUTED, 400, "left", "middle")
+    return (txt(0.7, 7.0, 7, 0.3, "Confidencial &middot; Perpetual Technologies &copy; 2026",
+                8.5, MUTED, 400, "left", "middle")
             + txt(11.7, 7.0, 1.1, 0.3, str(page).zfill(2), 8.5, MUTED, 400, "right", "middle"))
 
 
@@ -198,7 +197,7 @@ def donut(x, y, d, segments, thickness=22, track="#e5e9f4"):
     cx = cy = px / 2
     circ = 2 * 3.14159265 * rad
     parts = [f'<svg width="{px:.1f}" height="{px:.1f}" '
-             f'style="position:absolute;left:{_p(x)};top:{_p(y)};transform:rotate(-90deg)">']
+             f'style="position:absolute;left:{_p(x)};top:{_p(y)};transform:rotate(-90deg);overflow:visible">']
     parts.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{rad:.1f}" fill="none" '
                  f'stroke="{track}" stroke-width="{thickness}"/>')
     offset = 0.0
@@ -286,7 +285,7 @@ def m01():
 def m02():
     """5 opciones numeradas."""
     out = [title(f"Cinco {AC('opciones.')}"),
-           txt(0.7, 1.85, 9.0, 0.5,
+           txt(0.7, 2.35, 9.0, 0.4,
                "Comparativa de alternativas estrategicas en un mismo nivel de decision.",
                12.5, MUTED, 400, lh=1.3)]
     cols = [ACCENT, BGD, MUTED, "#cbd5e1", "#60a5fa"]
@@ -309,7 +308,7 @@ def m02():
 def m03():
     """Proceso: linea ascendente con 3 hitos."""
     out = [title(f"Proceso de {AC('crecimiento.')}"),
-           txt(0.7, 1.8, 9.0, 0.5,
+           txt(0.7, 2.4, 9.0, 0.4,
                "Evolucion del volumen de reportes procesados a lo largo del despliegue.",
                12.5, MUTED, 400, lh=1.3)]
     vals = [15, 22, 28, 35, 40, 45]
@@ -332,11 +331,12 @@ def m03():
 def m04():
     """Mind-map: nodo central + 4 tarjetas INFODATA."""
     out = [title(f"Mapa de {AC('informacion.')}")]
-    ncx, ncy = 2.6, 4.1  # centro hexagono
-    out += [hexagon(ncx - 0.95, ncy - 0.95, 1.9, ACCENT),
+    ncx, ncy = 2.6, 4.1  # centro nodo
+    nr = 0.95  # radio del nodo central (circulo)
+    out += [box(ncx - nr, ncy - nr, nr * 2, nr * 2, fill=ACCENT, oval=True, shadow=True),
             box(ncx - 0.28, ncy - 0.28, 0.56, 0.56, fill=WHITE, oval=True),
             blob(ncx - 0.11, ncy - 0.11, 0.22, ACCENT),
-            txt(ncx - 1.5, ncy + 1.05, 3.0, 0.3, "Eje central", 11, TEXT, 600, "center", upper=True, spacing=0.6)]
+            txt(ncx - 1.5, ncy + nr + 0.18, 3.0, 0.3, "Eje central", 11, TEXT, 600, "center", upper=True, spacing=0.6)]
     cards = [
         ("INFODATA 01", "Fuentes de datos", "Integracion de canales y CRM en un repositorio unico."),
         ("INFODATA 02", "Modelado", "Normalizacion y enriquecimiento de la informacion."),
@@ -347,8 +347,8 @@ def m04():
     ys = [1.55, 2.85, 4.15, 5.45]
     for (tag, t, d), y in zip(cards, ys):
         cardcy = y + ch / 2
-        out += [connector(ncx + 0.85, ncy, cx, cardcy, color=BORDER, w=2),
-                blob(ncx + 0.8, ncy - 0.06, 0.12, ACCENT2),
+        out += [connector(ncx + nr, ncy, cx, cardcy, color=BORDER, w=2),
+                blob(ncx + nr - 0.06, ncy - 0.06, 0.12, ACCENT2),
                 box(cx, y, cw, ch, fill=WHITE, r=12, shadow=True, line=BORDER),
                 box(cx, y, 0.09, ch, fill=ACCENT, r=4),
                 txt(cx + 0.35, y + 0.16, cw - 0.6, 0.3, tag, 10, ACCENT, 600, upper=True, spacing=0.8),
@@ -361,20 +361,21 @@ def m04():
 def m05():
     """4 hexagonos de metricas."""
     out = [title(f"Indicadores {AC('clave.')}"),
-           txt(0.7, 1.8, 9.0, 0.5, "Usuarios activos por segmento de plataforma.",
+           txt(0.7, 2.4, 9.0, 0.4, "Usuarios activos por segmento de plataforma.",
                12.5, MUTED, 400, lh=1.3)]
     metrics = [("17,2", ACCENT, WHITE, "Mayor adopcion en el canal principal."),
                ("15,2", BGD, WHITE, "Base estable con retencion sostenida."),
                ("21,2", "#60a5fa", WHITE, "Crecimiento acelerado del trimestre."),
                ("18,2", "#cbd5e1", TEXT, "Segmento maduro con margen de mejora.")]
     x0, size, gap = 0.85, 2.55, 0.45
+    hy = 2.95
     for i, (val, fill, fg, side) in enumerate(metrics):
         x = x0 + i * (size + gap)
-        out += [hexagon(x, 2.55, size, fill),
-                txt(x, 2.55 + size * 0.28, size, 0.7, val, 32, fg, 800, "center"),
-                txt(x, 2.55 + size * 0.55, size, 0.3, "Millon usuarios", 9.5, fg, 600, "center",
+        out += [hexagon(x, hy, size, fill),
+                txt(x, hy + size * 0.28, size, 0.7, val, 32, fg, 800, "center"),
+                txt(x, hy + size * 0.55, size, 0.3, "Millon usuarios", 9.5, fg, 600, "center",
                     upper=True, spacing=0.4),
-                txt(x - 0.1, 2.55 + size + 0.15, size + 0.2, 0.8, side, 10, MUTED, 400, "center", lh=1.25)]
+                txt(x - 0.1, hy + size + 0.15, size + 0.2, 0.8, side, 10, MUTED, 400, "center", lh=1.25)]
     out.append(footer(5))
     return "".join(out)
 
@@ -409,7 +410,7 @@ def m06():
 def m07():
     """Proceso 01-06 en fila/abanico."""
     out = [title(f"Flujo en {AC('seis pasos.')}"),
-           txt(0.7, 1.8, 9.0, 0.5, "Secuencia operativa de extremo a extremo.",
+           txt(0.7, 2.4, 9.0, 0.4, "Secuencia operativa de extremo a extremo.",
                12.5, MUTED, 400, lh=1.3)]
     steps = [("Descubrir", ACCENT), ("Definir", ACCENT2), ("Disenar", GREEN),
              ("Desarrollar", YELLOW), ("Desplegar", VIOLET), ("Medir", MUTED)]
@@ -434,7 +435,7 @@ def m08():
               ("Viewers Tres", "30%", GREEN, 4.4),
               ("Viewers Cuatro", "40%", "#cbd5e1", 5.6)]
     cx = 4.3
-    top_y = 1.85
+    top_y = 2.45
     lh = 1.0
     for i, (name, pct, col, w) in enumerate(levels):
         y = top_y + i * lh
@@ -444,9 +445,9 @@ def m08():
                 txt(x, y, w, lh - 0.12, name, 12.5, fg, 600, "center", "middle")]
     # leyenda a la derecha
     lx = 8.6
-    out.append(txt(lx, 1.9, 4.0, 0.3, "Distribucion", 11, ACCENT, 600, upper=True, spacing=0.6))
+    out.append(txt(lx, 2.5, 4.0, 0.3, "Distribucion", 11, ACCENT, 600, upper=True, spacing=0.6))
     for i, (name, pct, col, w) in enumerate(levels):
-        y = 2.45 + i * 0.85
+        y = 3.05 + i * 0.85
         out += [box(lx, y + 0.05, 0.28, 0.28, fill=col, r=5),
                 txt(lx + 0.45, y, 2.4, 0.35, name, 12, TEXT, 600),
                 txt(lx + 2.7, y, 1.3, 0.35, pct, 14, col if col != "#cbd5e1" else MUTED, 800, "right")]
@@ -487,7 +488,7 @@ def m09():
 def m10():
     """4 iconos circulares con hexagono blanco dentro."""
     out = [title(f"Pilares de {AC('valor.')}"),
-           txt(0.7, 1.8, 9.0, 0.5, "Las cuatro dimensiones que sostienen la propuesta.",
+           txt(0.7, 2.4, 9.0, 0.4, "Las cuatro dimensiones que sostienen la propuesta.",
                12.5, MUTED, 400, lh=1.3)]
     items = [("Inversion", ACCENT, "inversion", "Asignacion eficiente de presupuesto."),
              ("Estrategia", ACCENT2, "estrategia", "Direccion clara y priorizada."),
